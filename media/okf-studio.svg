@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" fill="none">
+  <title>OKF Studio</title>
+  <desc>Connected knowledge nodes inside an open hexagon.</desc>
+  <rect width="128" height="128" rx="28" fill="#0f172a"/>
+  <path d="m98 31-34-19-46 27v50l46 27 46-27V55" stroke="#5eead4" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m44 44 32 20-32 20m32-20 25-15" stroke="#67e8f9" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#f0fdfa"><circle cx="44" cy="44" r="8"/><circle cx="44" cy="84" r="8"/><circle cx="76" cy="64" r="9"/></g>
+  <circle cx="103" cy="47" r="8" fill="#67e8f9"/>
+</svg>

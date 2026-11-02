@@ -1,0 +1,41 @@
+name: Validate and package
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  core:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run build
+      - run: npm test
+      - run: npm audit --audit-level=moderate
+      - run: npm run sbom
+      - run: npm run package
+      - uses: actions/upload-artifact@v4
+        with:
+          name: okf-${{ matrix.os }}
+          path: dist/
+  ui-and-host:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps msedge
+      - run: npm run test:ui
+      - run: xvfb-run -a npm run test:host

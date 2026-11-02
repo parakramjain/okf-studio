@@ -1,0 +1,374 @@
+{
+  "name": "okf-knowledge-studio",
+  "displayName": "OKF Studio",
+  "icon": "media/okf-studio.png",
+  "description": "Turn code and documents into trusted knowledge that AI agents can use.",
+  "version": "0.4.0",
+  "author": "Parakram Jain",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/parakramjain/okf-studio.git"
+  },
+  "homepage": "https://github.com/parakramjain/okf-studio#readme",
+  "bugs": {
+    "url": "https://github.com/parakramjain/okf-studio/issues"
+  },
+  "keywords": [
+    "knowledge",
+    "OKF",
+    "AI",
+    "MCP",
+    "RAG",
+    "documents",
+    "code exploration",
+    "vector search",
+    "governance"
+  ],
+  "publisher": "okf-studio-local",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.109.0"
+  },
+  "categories": [
+    "Machine Learning",
+    "Visualization",
+    "Other"
+  ],
+  "main": "./out/extension.cjs",
+  "extensionKind": [
+    "workspace"
+  ],
+  "activationEvents": [
+    "onStartupFinished",
+    "onView:okf.studio",
+    "onMcpServerDefinitionProvider:okf.knowledge"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "Reading the welcome view is supported; indexing, AI and MCP require trust."
+    },
+    "virtualWorkspaces": {
+      "supported": false
+    }
+  },
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "okf",
+          "title": "OKF Studio",
+          "icon": "media/okf-studio-activity.svg"
+        }
+      ]
+    },
+    "views": {
+      "okf": [
+        {
+          "type": "webview",
+          "id": "okf.studio",
+          "name": "OKF Studio"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "okf.open",
+        "title": "OKF: Open OKF Studio"
+      },
+      {
+        "command": "okf.openEditor",
+        "title": "OKF: Open OKF Studio in Editor",
+        "icon": "$(open-preview)"
+      },
+      {
+        "command": "okf.import",
+        "title": "OKF: Import Repository"
+      },
+      {
+        "command": "okf.sync",
+        "title": "OKF: Synchronize Repositories"
+      },
+      {
+        "command": "okf.generate",
+        "title": "OKF: Proceed to Create OKF"
+      },
+      {
+        "command": "okf.configure",
+        "title": "OKF: Configure Providers and Credentials"
+      },
+      {
+        "command": "okf.ask",
+        "title": "OKF: Ask About Selected Files"
+      },
+      {
+        "command": "okf.agent",
+        "title": "OKF: Install Optional Knowledge Agent"
+      },
+      {
+        "command": "okf.export",
+        "title": "OKF: Export Knowledge"
+      },
+      {
+        "command": "okf.clear",
+        "title": "OKF: Delete Local Index and Revoke Consent"
+      },
+      {
+        "command": "okf.guide",
+        "title": "OKF: Open User Guide",
+        "icon": "$(book)"
+      },
+      {
+        "command": "okf.git.status",
+        "title": "OKF: Git: Status & Diff"
+      },
+      {
+        "command": "okf.git.history",
+        "title": "OKF: Git: Commit History"
+      },
+      {
+        "command": "okf.git.branches",
+        "title": "OKF: Git: Switch Branch"
+      },
+      {
+        "command": "okf.git.fetch",
+        "title": "OKF: Git: Fetch"
+      },
+      {
+        "command": "okf.git.pull",
+        "title": "OKF: Git: Pull"
+      },
+      {
+        "command": "okf.git.commit",
+        "title": "OKF: Git: Commit"
+      },
+      {
+        "command": "okf.git.push",
+        "title": "OKF: Git: Push"
+      },
+      {
+        "command": "okf.git.clone",
+        "title": "OKF: Git: Clone Repository"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "okf.ask",
+          "group": "navigation@20"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "okf.ask",
+          "group": "navigation@20"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "okf.openEditor",
+          "when": "view == okf.studio",
+          "group": "navigation@2"
+        },
+        {
+          "command": "okf.guide",
+          "when": "view == okf.studio",
+          "group": "navigation@1"
+        }
+      ]
+    },
+    "mcpServerDefinitionProviders": [
+      {
+        "id": "okf.knowledge",
+        "label": "OKF Studio"
+      }
+    ],
+    "configuration": {
+      "title": "OKF Studio",
+      "properties": {
+        "okf.maxFileBytes": {
+          "type": "number",
+          "default": 1048576,
+          "minimum": 1024,
+          "maximum": 10485760,
+          "description": "Maximum indexed source file size."
+        },
+        "okf.ignore": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "**/node_modules/**",
+            "**/.git/**",
+            "**/dist/**",
+            "**/out/**",
+            "**/.venv/**",
+            "**/.env*",
+            "**/*lock*"
+          ],
+          "description": "Additional excluded glob patterns. Git ignore rules also apply."
+        },
+        "okf.chunkLines": {
+          "type": "number",
+          "default": 60,
+          "minimum": 8,
+          "maximum": 300
+        },
+        "okf.chunkOverlap": {
+          "type": "number",
+          "default": 6,
+          "minimum": 0,
+          "maximum": 100
+        },
+        "okf.chatProvider": {
+          "type": "string",
+          "enum": [
+            "evidence",
+            "vscode",
+            "ollama",
+            "openai",
+            "azure",
+            "compatible"
+          ],
+          "default": "evidence",
+          "description": "Evidence mode retrieves excerpts offline without claiming a model-generated answer."
+        },
+        "okf.chatModel": {
+          "type": "string",
+          "default": "",
+          "description": "Explicit chat model ID; choose an installed or available model."
+        },
+        "okf.embeddingProvider": {
+          "type": "string",
+          "enum": [
+            "none",
+            "ollama",
+            "openai",
+            "azure",
+            "compatible"
+          ],
+          "default": "none"
+        },
+        "okf.embeddingModel": {
+          "type": "string",
+          "default": ""
+        },
+        "okf.chatEndpoint": {
+          "type": "string",
+          "default": "",
+          "description": "Optional chat base URL; falls back to okf.endpoint."
+        },
+        "okf.embeddingEndpoint": {
+          "type": "string",
+          "default": "",
+          "description": "Optional embedding base URL; falls back to okf.endpoint."
+        },
+        "okf.endpoint": {
+          "type": "string",
+          "default": "",
+          "description": "Provider base URL; HTTPS required except loopback Ollama."
+        },
+        "okf.apiVersion": {
+          "type": "string",
+          "default": "2024-10-21",
+          "description": "Azure API version."
+        },
+        "okf.vectorBackend": {
+          "type": "string",
+          "enum": [
+            "local",
+            "qdrant",
+            "pgvector"
+          ],
+          "default": "local"
+        },
+        "okf.vectorEndpoint": {
+          "type": "string",
+          "default": "",
+          "description": "HTTPS Qdrant URL. PostgreSQL connection strings belong in SecretStorage."
+        },
+        "okf.tokenBudget": {
+          "type": "number",
+          "default": 6000,
+          "minimum": 256,
+          "maximum": 24000
+        },
+        "okf.retentionDays": {
+          "type": "number",
+          "default": 90,
+          "minimum": 1
+        },
+        "okf.telemetry": {
+          "type": "boolean",
+          "default": false,
+          "description": "Reserved opt-in; this release has no telemetry exporter."
+        },
+        "okf.answerMaxChunks": {
+          "type": "number",
+          "default": 6,
+          "minimum": 1,
+          "maximum": 12,
+          "description": "Maximum relevant excerpts selected for one Ask AI question (at most two per file)."
+        },
+        "okf.answerContextTokens": {
+          "type": "number",
+          "default": 3000,
+          "minimum": 500,
+          "maximum": 16000,
+          "description": "Estimated total input-token limit for Ask AI, including question, instructions and evidence. Also bounded by okf.tokenBudget."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "vscode:prepublish": "npm run build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src webview tests scripts --max-warnings 0",
+    "test": "vitest run",
+    "test:host": "node scripts/test-host.mjs",
+    "test:ui": "playwright test",
+    "benchmark": "tsx scripts/benchmark.ts",
+    "evaluate": "tsx scripts/evaluate-retrieval.ts",
+    "package": "vsce package --no-dependencies --no-rewrite-relative-links --out dist/okf-studio-0.4.0.vsix",
+    "sbom": "npm sbom --sbom-format cyclonedx > dist/sbom.cdx.json"
+  },
+  "dependencies": {
+    "@lezer/python": "^1.1.19",
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "ignore": "^7.0.14",
+    "minimatch": "^11.0.3",
+    "pg": "^8.23.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "sql.js": "^1.15.2",
+    "typescript": "^5.9.3",
+    "undici": "^8.12.3",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^22.20.5",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/sql.js": "^1.4.11",
+    "@types/vscode": "^1.109.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^4.1.0",
+    "esbuild": "^0.28.2",
+    "eslint": "^9.39.5",
+    "prettier": "^3.9.10",
+    "tsx": "^4.23.15",
+    "typescript-eslint": "^8.72.1",
+    "vite": "^6.4.5",
+    "vitest": "^5.0.5"
+  },
+  "overrides": {
+    "minimatch": "$minimatch"
+  }
+}
