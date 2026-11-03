@@ -1,32 +1,43 @@
-# Publication status and pending verification
+# Pending improvements and verification
 
-Updated 2026-11-02 (America/Toronto). Owner: Parakram Jain. **OKF Studio 0.4.1 is published** on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ParakramJain.okf-knowledge-studio) and [GitHub Releases](https://github.com/parakramjain/okf-studio/releases/tag/v0.4.1). Publisher setup and release blockers are resolved. No further publishing credentials or account setup are required for this release.
+Updated 2026-11-02 (America/Toronto). Owner: Parakram Jain. This file tracks open work only. Release evidence is retained in [IMPLEMENTATION_STATUS.md](../IMPLEMENTATION_STATUS.md); installation and migration instructions are in [README.md](../README.md#install).
 
-| Item | Current state | Evidence / next action | Owner |
+## Network graph viewer upgrade
+
+**Priority: High. Status: Planned; not implemented. Owner: Development.**
+
+The current viewer is under **Knowledge Explorer > Sources > Graph**. It uses a fixed four-column layout, renders at most 60 nodes and 150 edges, and supports selecting nodes for change impact with text relations below. It needs a more discoverable, sophisticated interface for exploring connected knowledge.
+
+Planned improvements:
+
+- **Visible entry point and workspace:** expose a clearly labeled **Network Graph** action in Knowledge Explorer, with a spacious editor view, brief explanation, legend and page tour.
+- **Navigation:** add zoom, pan, fit-to-view, reset, a minimap, and draggable/pinnable nodes. Preserve the viewport while inspecting nodes.
+- **Readable layouts:** offer force-directed and hierarchical layouts; group by repository, folder or module with expandable clusters. Reduce overlapping labels and edges.
+- **Search and filtering:** find and focus a node by name/path; filter by repository, node type and relationship type; honor source selections and distinguish resolved from approximate relations.
+- **Focused exploration:** highlight incoming/outgoing connections, expand or collapse neighbors, choose traversal depth and inspect bounded change-impact paths without losing the wider context.
+- **Details and evidence:** provide a node/edge inspector with full labels, relationship direction/type, available provenance and source links. Clearly label inferred relationships and missing evidence.
+- **Large graph handling:** replace the fixed visual cutoff with progressive exploration and clustering. Show loaded/visible/total counts where known, disclose every cap and provide actionable empty/loading/error states.
+- **Accessibility and saved views:** keep keyboard navigation and a text equivalent; support light/dark/high-contrast themes and reduced motion. Save layout/filter preferences and provide an explicit export of the visible graph.
+
+Acceptance criteria:
+
+1. Users can discover the graph directly, find a node, inspect its neighbors and open supporting source evidence without losing their selected scope.
+2. Navigation, filtering and layout changes work in both sidebar and full editor views. Keyboard users can perform equivalent exploration and return focus reliably.
+3. Representative small and large fixtures cover cycles, disconnected nodes, long labels and approximate relations. Record rendering/interaction performance and declared limits; no silent truncation or frozen UI.
+4. Update the feature catalog, tour, screenshots and Markdown/HTML guides to match the shipped viewer. Correct the current guide's claim of 200 rendered nodes to match the actual implementation or its replacement. Add focused interaction and accessibility checks before marking this item complete.
+
+## Remaining verification
+
+| Item | Current state | Next action | Owner |
 | --- | --- | --- | --- |
-| Public source repository | Resolved | https://github.com/parakramjain/okf-studio is public; anonymous access verified. | Completed |
-| Public documentation, images and support | Resolved | Anonymous HTTPS checks return 200 for README, icon, three release screenshots and issue tracker. VSIX packaging rewrites relative README links to HTTPS. | Completed |
-| Pending-file rename | Resolved | References and VSIX inclusion now use `docs/pending_issue.md`; the old misspelling is removed. | Completed |
-| Automated platform coverage | Resolved for tested paths | [CI run 41569121733](https://github.com/parakramjain/okf-studio/actions/runs/41569121733) passed all four jobs on release commit `9b64d5e`: macOS/Ubuntu/Windows core checks and Ubuntu UI/extension-host checks. Local results: 75 unit tests, two UI integration tests, clean installation and upgrade/migration checks passed. This is not full manual platform certification. | Completed |
-| Public VSIX release | Published | [v0.4.1 preview release](https://github.com/parakramjain/okf-studio/releases/tag/v0.4.1) includes the exact Marketplace-submitted VSIX, checksum, package/runtime verification, SBOM and zero-vulnerability audit. | Completed |
-| Marketplace publisher | Verified | `ParakramJain` (display name Parakram Jain) successfully published through OIDC. Marketplace metadata confirms the publisher, OKF Studio and version 0.4.1. | Completed |
-| Publisher/package identity | Verified | Manifest uses `ParakramJain`. Installed checks on the Marketplace archive passed: legacy catalog migration, retained workspace records, 19 commands and matching runtime files. The migration preserves originals; disable the old extension and re-enter credentials. | Completed |
-| Trusted Publishing policy | Verified | Successful authenticated workflow: owner `parakramjain`, repository `okf-studio`, workflow `publish-marketplace.yml`, environment blank. | Completed |
-| Marketplace workflow configuration | Configured | `.github/workflows/publish-marketplace.yml` uses OIDC; `VSCE_PUBLISHER=ParakramJain` is configured. No PAT/repository secret is required. | Completed |
-| Marketplace submission | Published and verified | [Publishing run 41569561059](https://github.com/parakramjain/okf-studio/actions/runs/41569561059) succeeded on release commit `9b64d5e`. The public listing returns HTTP 200, and the Marketplace API reports version 0.4.1. | Completed |
-| Live model/vector deployments | Not Verified; scope of preview disclosed | Use a non-sensitive fixture. Test each intended chat/embedding provider, build/retrieve with the chosen vector backend, and check citations/cancellation. No credentials were supplied. | Parakram or deployment tester |
+| Live model/vector deployments | Not Verified | Use a non-sensitive fixture. Test each intended chat/embedding provider, build/retrieve with the chosen vector backend, and check citations, cancellation and failure recovery. | Parakram or deployment tester |
 | Signed-in coding agent | Not Verified | Enable OKF Studio in the intended client, run status/search, open a citation and confirm proposals require human review. Local MCP runtime is already tested. | Parakram |
-| Manual accessibility and remote-host coverage | Not Verified | Check keyboard and screen-reader output, then each intended WSL/SSH/container host. Automated axe and hosted CI are not substitutes for these checks. | Parakram or tester |
-| Public security reporting channel | Resolved | GitHub private vulnerability reporting is enabled and verified. Use the Security tab for sensitive reports, not public issues. | Completed |
+| Manual accessibility and remote-host coverage | Not Verified | Check keyboard and screen-reader output, then each intended WSL/SSH/container host. Automated axe and hosted CI do not replace these checks. | Parakram or tester |
 
 ## Steps for Parakram now
 
-1. If installed, **disable** the old `okf-studio-local.okf-knowledge-studio` extension, then run **Developer: Reload Window**. Keep its installation and data until you verify the import.
-2. Install **OKF Studio** by **ParakramJain** from the Marketplace link above. Alternatively, download the release VSIX and use **Extensions: Install from VSIX**.
-3. Open the same trusted workspace and run **OKF: Open OKF Studio**. Check that your existing repositories and source records appear. Each workspace's legacy catalog imports once when the new catalog is absent; original files remain intact.
-4. If you use AI or remote vector services, run **OKF: Configure Providers and Credentials** and re-enter credentials. Existing `okf.*` settings remain; credentials cannot transfer between extension identities. Offline keyword search needs no credentials.
-5. Validate the integrations you actually use: test embedding/vector connections, index a small non-sensitive fixture, ask a scoped question and inspect citations. In your coding client, enable OKF's MCP tools, run status/search and confirm changes require review. Record results for the three remaining verification rows above; test screen readers and remote hosts where applicable.
+1. For services you use, configure credentials with **OKF: Configure Providers and Credentials**, test embedding/vector connections, index a small non-sensitive fixture, ask a scoped question and inspect citations.
+2. In your coding client, enable OKF's MCP tools, run status/search and confirm proposed changes require review.
+3. Test your screen reader and intended remote hosts where applicable. Record the version, environment, result and any reproducible failures against the remaining verification items.
 
-The Marketplace and GitHub VSIX is 5,992,516 bytes. SHA-256: `0d356b3d1eb88f5cc0ec72fd0a06bfa632d008fb4070e6d1b0482d47c91a4bc1`.
-
-Future release instructions are in [PUBLISHING.md](PUBLISHING.md). The remaining service/client/manual checks are disclosed preview limitations, not outstanding account setup. They do not require buying every supported service before using offline features.
+These service/client/manual checks remain preview limitations. Offline keyword search needs no credentials. Future release instructions are in [PUBLISHING.md](PUBLISHING.md).
