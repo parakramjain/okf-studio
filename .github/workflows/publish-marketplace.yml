@@ -1,0 +1,49 @@
+name: Publish to Visual Studio Marketplace
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact version in package.json (for example 0.4.1)
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: marketplace-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      id-token: write
+    env:
+      OKF_EXPECTED_VERSION: ${{ inputs.version }}
+      VSCE_PUBLISHER: ${{ vars.VSCE_PUBLISHER }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Verify publisher, version and successful CI for this commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/runs?head_sha=$GITHUB_SHA&per_page=20" > "$RUNNER_TEMP/okf-ci.json"
+          node scripts/publish-preflight.mjs "$RUNNER_TEMP/okf-ci.json"
+      - run: npm ci
+      - run: npm audit --audit-level=moderate
+      - run: npm run package
+      - run: python scripts/inspect-package.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: marketplace-${{ inputs.version }}
+          path: |
+            dist/*.vsix
+            dist/SHA256SUMS.txt
+            dist/package-inspection.json
+      - name: Publish the inspected VSIX using Trusted Publishing
+        run: npx --no-install vsce publish --oidc --packagePath "dist/okf-studio-${OKF_EXPECTED_VERSION}.vsix"

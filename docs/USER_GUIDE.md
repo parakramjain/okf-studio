@@ -2,11 +2,11 @@
 
 **Turn code and documents into trusted knowledge that AI agents can use.**
 
-Version 0.4.0. Author, developer and owner: Parakram Jain.
+Version 0.4.1. Author, developer and owner: Parakram Jain.
 
 ## Start here
 
-Install the supplied VSIX with Extensions > Install from VSIX or `code --install-extension dist/okf-studio-0.4.0.vsix`. Open a trusted workspace in VS Code 1.109 or newer. Use the OKF Studio activity icon or `OKF: Open OKF Studio`. Select **Open in editor** for a wider workspace.
+Install the supplied VSIX with Extensions > Install from VSIX or `code --install-extension dist/okf-studio-0.4.1.vsix`. Open a trusted workspace in VS Code 1.109 or newer. Use the OKF Studio activity icon or `OKF: Open OKF Studio`. Select **Open in editor** for a wider workspace.
 
 The top toolbar includes **User guide**, **Studio tour**, **Features**, and **About**. Every section has a purpose, explicit features and **Tour this page**. The guide works offline and its search stays on your device.
 
@@ -114,7 +114,7 @@ The local SQLite database contains source-derived content and is not separately 
 
 Use the Command Palette with the **OKF:** prefix: Open OKF Studio, Open OKF Studio in Editor, Import Repository, Synchronize Repositories, Proceed to Create OKF, Configure Providers and Credentials, Ask About Selected Files, Install Optional Knowledge Agent, Export Knowledge, Delete Local Index and Revoke Consent, Open User Guide, and Git Status & Diff / Commit History / Switch Branch / Fetch / Pull / Commit / Push / Clone Repository.
 
-Version 0.4.0 keeps extension ID `okf-studio-local.okf-knowledge-studio`, command IDs, settings and database schema compatible. Marketplace publisher verification and publication remain pending. The source repository is private at https://github.com/parakramjain/okf-studio and requires collaborator access.
+Version 0.4.1 uses publisher `ParakramJain`, giving it extension ID `ParakramJain.okf-knowledge-studio`. Disable the old `okf-studio-local` extension and reload before enabling this version. The current workspace catalog is imported once from the old storage location when the new catalog is absent; invalid legacy data blocks migration rather than being silently discarded. Source/OKF files and old catalog files are preserved. Re-enter provider credentials; session consent starts fresh. Command IDs, `okf.*` settings and database schema remain compatible. The source repository is public at https://github.com/parakramjain/okf-studio. Installable public previews are distributed through GitHub Releases; Marketplace submission uses the configured publisher and Trusted Publishing policy.
 
 ## Product screenshots
 

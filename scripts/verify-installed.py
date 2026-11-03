@@ -9,8 +9,9 @@ for artifact in list(dist.glob('*.log')) + [dist / 'security-audit.json']:
     if raw.startswith((b'\xff\xfe', b'\xfe\xff')):
         artifact.write_text(raw.decode('utf-16'), encoding='utf-8')
 
-version = json.loads(Path('package.json').read_text(encoding='utf-8'))['version']
-installed = Path(f'.cache/vsix-extensions/okf-studio-local.okf-knowledge-studio-{version}')
+source_manifest = json.loads(Path('package.json').read_text(encoding='utf-8'))
+version = source_manifest['version']
+installed = Path(f".cache/vsix-extensions/{source_manifest['publisher'].lower()}.{source_manifest['name'].lower()}-{version}")
 matches = []
 with ZipFile(dist / f'okf-studio-{version}.vsix') as archive:
     for name in archive.namelist():

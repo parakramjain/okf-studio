@@ -1,6 +1,15 @@
 # Implementation status
 
-## Current release: 0.4.0 development review
+## 0.4.1 public distribution update — 2026-11-02
+
+The owner made the source repository public and authorized publication. Anonymous HTTPS checks passed for the repository, issue tracker, README, icon and release screenshots. CI run [41388060543](https://github.com/parakramjain/okf-studio/actions/runs/41388060543) completed successfully on all four jobs: macOS, Ubuntu and Windows core checks, plus Ubuntu UI/extension-host checks.
+
+This patch corrects the staged rename to `docs/pending_issue.md`, fixes all package/document references, makes packaged README links publicly resolvable, and prepares a public preview VSIX plus an OIDC Marketplace workflow. The workflow requires a verified matching publisher ID, exact version, main branch and successful CI on the same commit. The owner created publisher `ParakramJain` and its Trusted Publishing policy. The manifest and repository variable are aligned, and publisher migration preserves validated legacy catalogs without transferring secrets. Submission is authorized and will follow exact-commit CI/installed-package verification. Live service/client and manual accessibility/remote checks remain Not Verified; account-specific steps are documented in PUBLISHING.md.
+
+The 0.4.0 records below are historical release evidence. Their private-repository and publication-approval statements describe the earlier state and are superseded by this section.
+
+
+## 0.4.0 development review evidence
 
 Author, developer and owner: **Parakram Jain**. Brand: **OKF Studio**. Tagline: **Turn code and documents into trusted knowledge that AI agents can use.** Existing extension ID, settings, database and MCP registration are retained.
 
@@ -12,7 +21,7 @@ Executed source checks: typecheck, lint, build, 69 Vitest tests in ten suites, t
 
 `dist/retrieval-evaluation.json` reports lexical relevance, p95 in-process latency, citation validity and context bounds for four deliberately separable synthetic documents and one no-match query. It is not a general relevance or model-groundedness benchmark. Live model groundedness is Not Verified.
 
-Private source repository: https://github.com/parakramjain/okf-studio. Marketplace publishing remains blocked on a verified publisher and public documentation/images/support; see `docs/pendinissue.md`. Live model/vector deployments, signed-in coding clients, manual screen-reader tests and remote environments remain Not Verified. Git-PR team review, PDF/DOCX, external connectors and enterprise collaboration remain Planned/Missing. Static graph/trace/contradiction/coverage features remain Partial/heuristic. The full mapping is in `docs/REQUIREMENT_TEST_MATRIX.md`.
+Private source repository: https://github.com/parakramjain/okf-studio. Marketplace publishing remains blocked on a verified publisher and public documentation/images/support; see `docs/pending_issue.md`. Live model/vector deployments, signed-in coding clients, manual screen-reader tests and remote environments remain Not Verified. Git-PR team review, PDF/DOCX, external connectors and enterprise collaboration remain Planned/Missing. Static graph/trace/contradiction/coverage features remain Partial/heuristic. The full mapping is in `docs/REQUIREMENT_TEST_MATRIX.md`.
 
 ### Final local release checks
 
@@ -22,7 +31,7 @@ Private source repository: https://github.com/parakramjain/okf-studio. Marketpla
 - Synthetic retrieval evaluation: all four labeled positive cases have precision/recall 1.0; the no-match case returns no evidence; all citation/budget checks pass. Measured p95 per-query latency is 0.020–0.057 ms for this tiny in-process fixture. These values do not predict real-workspace latency or model groundedness.
 - Publication inventory excludes `.cache`, `dist`, `output`, `node_modules`, `.env` files and the supplied prompt pack. Credential-pattern scanning found only the intentionally fake private-key marker in `tests/hardening.test.ts`; no credential material is embedded. The configured private source remote and repository-local GitHub no-reply commit identity are verified.
 
-The release remains local VSIX plus private source. Marketplace publisher/public hosting, live providers, signed-in agent clients and manual screen-reader/remote environment verification are pending, as detailed in `docs/pendinissue.md`.
+The release remains local VSIX plus private source. Marketplace publisher/public hosting, live providers, signed-in agent clients and manual screen-reader/remote environment verification are pending, as detailed in `docs/pending_issue.md`.
 
 ## Historical implementation log
 

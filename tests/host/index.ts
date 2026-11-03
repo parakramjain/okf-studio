@@ -7,7 +7,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
 export async function run(): Promise<void> {
   const extension = vscode.extensions.getExtension(
-    "okf-studio-local.okf-knowledge-studio",
+    process.env.OKF_EXTENSION_ID ?? "okf-studio-local.okf-knowledge-studio",
   );
   assert.ok(extension, "extension discovered");
   const api = (await extension.activate()) as {
@@ -17,6 +17,7 @@ export async function run(): Promise<void> {
       webviewReady: boolean;
       records: number;
       repositories: number;
+      migratedFrom?: string;
     };
     indexWorkspace: (
       kind: string,
@@ -25,6 +26,15 @@ export async function run(): Promise<void> {
   };
   assert.ok(api.status().trusted, "fixture workspace trusted");
   assert.ok(api.status().mcpRegistered, "MCP provider registered");
+  if (process.env.OKF_EXPECT_LEGACY_MIGRATION === "1") {
+    assert.equal(
+      api.status().migratedFrom,
+      "okf-studio-local.okf-knowledge-studio",
+    );
+    console.log(
+      "OKF PUBLISHER MIGRATION: validated legacy catalog imported without deleting original PASS",
+    );
+  }
   if (process.env.OKF_EXPECT_UPGRADE === "1") {
     assert.ok(
       api.status().repositories > 0 && api.status().records > 0,

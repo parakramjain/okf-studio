@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.1
+
+- Prepare public preview distribution and Marketplace Trusted Publishing workflow.
+- Fix pending_issue.md rename throughout documentation and VSIX packaging.
+- Use public HTTPS README/image links; retain local offline HTML guide resources.
+- Validate publisher, version, branch and successful CI before Marketplace submission.
+- Keep outstanding account setup and live/manual verification explicit.
+
+
 ## 0.4.0
 
 - Six workflow destinations, editor view, explicit multi-repository/document scope and migrated preferences.

@@ -1,28 +1,38 @@
 # Publishing OKF Studio
 
-Version 0.4.0. Release owner: Parakram Jain. Source repository: https://github.com/parakramjain/okf-studio (private; authentication required). Source publication is authorized. Marketplace publication is not part of the current task.
+Version 0.4.1 public preview. Owner: Parakram Jain. Repository: https://github.com/parakramjain/okf-studio (public). Publication was explicitly authorized on 2026-11-02. Publisher `ParakramJain` and the matching Trusted Publishing policy were supplied by the owner. The non-secret repository variable is configured. The workflow’s authenticated exchange verifies authorization during submission.
 
-## Identity and metadata
+## One-time setup completed by Parakram
 
-Display name: OKF Studio. Tagline: Turn code and documents into trusted knowledge that AI agents can use. Author/developer/owner: Parakram Jain. The technical name remains `okf-knowledge-studio` and publisher remains `okf-studio-local` to preserve the local extension identity. Do not invent a verified publisher or silently change installed IDs. A real publisher migration requires an explicit continuity plan for extension storage, settings and secrets.
+1. Open [Marketplace management](https://marketplace.visualstudio.com/manage), sign in with a Microsoft account, and select **Create publisher**. Choose a permanent ID (`parakramjain` is a suggestion if available) and display name (`Parakram Jain`). Complete the account's required fields and select **Create**. Send the exact ID to the agent; never send passwords or tokens.
+2. In that publisher, open **Trusted Publishing > Create**. Use policy name `OKF Studio releases`, repository owner `parakramjain`, repository `okf-studio`, workflow `publish-marketplace.yml`, and leave **Environment** blank. Create the policy and tell the agent it is ready.
 
-The manifest uses valid Machine Learning, Visualization and Other categories, a raster icon, benefit-oriented description, keywords, genuine repository/homepage/issue URLs and 19 contributed commands. The private URLs work for collaborators; they are not anonymous Marketplace support or image hosting. Current screenshots are real local VS Code extension captures. Public image/docs/support hosting remains a release blocker.
+Private vulnerability reporting has also been enabled and verified for the public repository; no extra security-setting step is needed from the owner.
 
-## Reproducible local release
+Microsoft documents publisher creation and [GitHub Trusted Publishing](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#publish-with-github-actions-and-trusted-publishing). The installed VSCE CLI supports `--oidc`; this route does not require a PAT or a GitHub repository secret. Authentication details should remain in the account's own sign-in UI.
 
-1. Use Node 22, Python 3, Git, desktop VS Code and Edge for UI tests. Run `npm ci` using the lockfile.
-2. Run `npm run typecheck`, `npm run lint`, `npm run build`, `npm test`, `npm run test:ui` and `npm run test:host`. The build creates bundled extension/worker/MCP code, WASM, webview assets and third-party notices.
-3. Run `npm audit --audit-level=moderate`, `npm run benchmark`, `npm run sbom`, and `npm run package`. Inspect `npx vsce ls --no-dependencies` and run `python scripts/inspect-package.py`.
-4. Install the exact `dist/okf-studio-0.4.0.vsix` into an isolated profile. Run host tests with `OKF_EXTENSION_PATH` pointing to the installed extension. Run `python scripts/verify-installed.py`; verify installed bytes, manifest contributions, host log and audit result.
-5. Capture actual extension screens; UI fixture screenshots alone do not establish a running product. Record SHA-256, file size, test results, platform, limitations and pending external checks in IMPLEMENTATION_STATUS and the requirement matrix.
-6. For upgrades retain the extension ID and inspect saved navigation migration, storage compatibility, file associations, command registration and activation. Do not claim live-provider or cross-platform tests from mocks.
+## Release operator checklist
 
-## Marketplace gate
+- The manifest is aligned to `ParakramJain`; the previous local ID is `okf-studio-local.okf-knowledge-studio`. Disable the old extension before enabling the replacement because their commands/views have the same IDs. The new installation imports a validated catalog once for each workspace and keeps original files. Re-enter credentials because SecretStorage is bound to extension identity.
+- The non-secret Actions repository variable `VSCE_PUBLISHER=ParakramJain` is configured. Future publisher changes require deliberate identity handling; this variable alone does not rewrite a VSIX.
+- Commit, package, verify and publish the updated source/release; wait for **Validate and package** to pass for that exact commit.
+- Trigger **Publish to Visual Studio Marketplace** on `main`, supplying the exact `package.json` version. The workflow rejects a missing/mismatched publisher, a different branch/repository, an incorrect version, and missing/pending/failed CI. It builds and inspects a VSIX, retains the artifact/checksum, and submits that archive using OIDC. It runs only on manual dispatch; pushes do not publish to Marketplace.
+- Check the Marketplace listing after its processing completes. Until that check succeeds, report the release as GitHub-only, not Marketplace-published.
 
-Resolve every applicable item in [pendinissue.md](pendinissue.md): verified publisher/account ownership, publicly reachable documentation/images/support, verified metadata, legal ownership/notices, live service/platform claims and reviewed final artifact. Consult the official [manifest reference](https://code.visualstudio.com/api/references/extension-manifest) and [publishing guide](https://code.visualstudio.com/api/working-with-extensions/publishing-extension) for current publisher authentication and submission requirements.
+## If running the workflow yourself
 
-Only after the owner approves the concrete final package for Marketplace publication should the release operator authenticate the verified publisher and publish. Never store Marketplace/GitHub tokens in source, screenshots, docs, logs or the VSIX. Packaging and private source push do not publish to Marketplace.
+After the agent confirms identity alignment and account setup, open [Actions](https://github.com/parakramjain/okf-studio/actions/workflows/publish-marketplace.yml), select **Run workflow**, choose `main`, and enter the current manifest version. A rejected preflight gives the missing prerequisite. An OIDC authorization failure usually means the publisher policy's owner/repository/workflow/environment does not match; fix the policy and rerun. Do not bypass the gate or supply an unverified publisher ID.
 
-## Rollback and support
+## Local verification and public release
 
-Keep the prior verified VSIX and checksum. If a release regresses, stop distributing it, install the previous VSIX with the same extension ID into a backed-up profile, and verify activation/storage before returning to normal use. Never delete user knowledge to force an upgrade. Avoid automatically downgrading databases across future schema changes. Record affected version, reproduction and workaround in release notes. Marketplace version withdrawal or replacement must follow the verified publisher's current controls and explicit owner approval.
+Use Node 22, Python 3, Git, desktop VS Code and Edge. Run `npm ci`, `npm run typecheck`, `npm run lint`, `npm run build`, `npm test`, `npm run test:ui`, `npm run test:host`, `npm audit --audit-level=moderate`, `npm run sbom`, `npm run package`, and `python scripts/inspect-package.py`. The package command uses the manifest version and rewrites README content/image URLs to the public repository; the in-extension HTML guide remains local and offline. `vsce ls --no-dependencies` lists shipped files.
+
+Install the exact VSIX into an isolated profile, run the installed host checks with `OKF_EXTENSION_PATH`, then run `python scripts/verify-installed.py`. Attach the VSIX, checksum, inspection, verification and SBOM to a public GitHub preview release. Do not describe that release as a Marketplace listing. Keep model/vector/client/manual verification limits in [pending_issue.md](pending_issue.md).
+
+## Service and manual checks
+
+For each provider you intend to advertise as live-tested: configure it using native SecretStorage prompts; test embedding and vector connections; index a small non-sensitive fixture; run a scoped question and inspect cited lines; cancel a request and check failure recovery. For your coding client, enable MCP and run status/search plus a reviewed proposal. Use the chosen screen reader to traverse all six pages, scope selectors, citations, dialogs and review controls; test intended remote hosts separately. These are preview limitations until actual evidence is recorded.
+
+## Rollback
+
+Retain the previous verified VSIX, checksum and user profile. Install the previous version with the same extension ID if a patch regresses, and verify its catalog before normal use. A publisher-ID change is a separate installation transition, not an ordinary downgrade. Never delete source/OKF files or local knowledge to force a release. Record the affected version and workaround publicly without exposing private data.

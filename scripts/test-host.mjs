@@ -1,7 +1,11 @@
 import { runTests } from "@vscode/test-electron";
 import path from "node:path";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 const root = process.cwd();
+const extensionPath = process.env.OKF_EXTENSION_PATH || root;
+const manifest = JSON.parse(
+  readFileSync(path.join(extensionPath, "package.json"), "utf8"),
+);
 const local =
   process.env.OKF_CODE_EXECUTABLE ||
   (process.platform === "win32"
@@ -14,10 +18,13 @@ const local =
     : "");
 delete process.env.ELECTRON_RUN_AS_NODE;
 await runTests({
-  extensionDevelopmentPath: process.env.OKF_EXTENSION_PATH || root,
+  extensionDevelopmentPath: extensionPath,
   extensionTestsPath: path.join(root, ".cache/test-build/host-test.cjs"),
   ...(local && existsSync(local) ? { vscodeExecutablePath: local } : {}),
   launchArgs: [
+    ...(manifest.publisher.toLowerCase() !== "okf-studio-local"
+      ? ["--disable-extension=okf-studio-local.okf-knowledge-studio"]
+      : []),
     ...(process.env.OKF_DEBUG_PORT
       ? ["--remote-debugging-port=" + process.env.OKF_DEBUG_PORT]
       : []),
@@ -47,6 +54,10 @@ await runTests({
   ],
   extensionTestsEnv: {
     OKF_TEST: "1",
+    OKF_EXTENSION_ID: `${manifest.publisher}.${manifest.name}`,
+    ...(process.env.OKF_EXPECT_LEGACY_MIGRATION
+      ? { OKF_EXPECT_LEGACY_MIGRATION: process.env.OKF_EXPECT_LEGACY_MIGRATION }
+      : {}),
     ...(process.env.OKF_EXPECT_UPGRADE
       ? { OKF_EXPECT_UPGRADE: process.env.OKF_EXPECT_UPGRADE }
       : {}),

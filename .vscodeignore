@@ -17,7 +17,7 @@ out/host-test.cjs
 !docs/PUBLISHING.md
 !docs/SECURITY.md
 !docs/UX_GUIDELINES.md
-!docs/pendinissue.md
+!docs/pending_issue.md
 !RELEASE_NOTES.md
 !IMPLEMENTATION_STATUS.md
 !ARCHITECTURE_DECISIONS.md

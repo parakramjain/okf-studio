@@ -3,7 +3,7 @@
   "displayName": "OKF Studio",
   "icon": "media/okf-studio.png",
   "description": "Turn code and documents into trusted knowledge that AI agents can use.",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "author": "Parakram Jain",
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
     "vector search",
     "governance"
   ],
-  "publisher": "okf-studio-local",
+  "publisher": "ParakramJain",
   "license": "MIT",
   "engines": {
     "vscode": "^1.109.0"
@@ -331,7 +331,7 @@
     "test:ui": "playwright test",
     "benchmark": "tsx scripts/benchmark.ts",
     "evaluate": "tsx scripts/evaluate-retrieval.ts",
-    "package": "vsce package --no-dependencies --no-rewrite-relative-links --out dist/okf-studio-0.4.0.vsix",
+    "package": "node scripts/package.mjs",
     "sbom": "npm sbom --sbom-format cyclonedx > dist/sbom.cdx.json"
   },
   "dependencies": {
@@ -370,5 +370,6 @@
   },
   "overrides": {
     "minimatch": "$minimatch"
-  }
+  },
+  "preview": true
 }

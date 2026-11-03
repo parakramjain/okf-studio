@@ -22,4 +22,4 @@ New bundles use staged, non-overwriting publication. Existing file changes requi
 
 ## Reporting and remaining verification
 
-Repository collaborators should privately report a minimal reproduction to the owner through a private channel already agreed with them. Do not put credentials or private source in public issues. A public security contact and incident process must be established before public Marketplace publication. Live provider deployments, OS/remote environments and manual assistive-technology checks remain explicitly tracked in pendinissue.md. No independent security certification is claimed.
+Report security-sensitive reproductions through [GitHub private vulnerability reporting](https://github.com/parakramjain/okf-studio/security/advisories/new), which is enabled for this repository. Do not put credentials or private source in public issues. Live provider deployments, OS/remote environments and manual assistive-technology checks remain explicitly tracked in pending_issue.md. No independent security certification is claimed.

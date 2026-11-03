@@ -69,8 +69,11 @@ export function Catalog({
             <dd>{version ?? "Development build"}</dd>
             <dt>Extension ID</dt>
             <dd>{publisher ?? "okf-studio-local"}.okf-knowledge-studio</dd>
-            <dt>Marketplace publication</dt>
-            <dd>Pending verified publisher and release approval</dd>
+            <dt>Distribution</dt>
+            <dd>
+              Public preview. See the Marketplace listing or GitHub Releases for
+              the available version.
+            </dd>
             <dt>License</dt>
             <dd>MIT. Third-party notices are included in the extension.</dd>
           </dl>

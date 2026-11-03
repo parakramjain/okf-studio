@@ -21,6 +21,7 @@ import {
   OutputRedactor,
 } from "./domain/security";
 import { Store } from "./persistence/store";
+import { importLegacyCatalog } from "./persistence/migrate";
 import { safeSourceFS, reviewIO, checkPath } from "./host/files";
 import { bundleIO, bundleFolderName } from "./host/bundle-files";
 import { createOrUpdateBundle } from "./governance/bundle";
@@ -1845,6 +1846,7 @@ class Studio implements vscode.WebviewViewProvider {
       mcpRegistered: this.mcpRegistered,
       webviewReady: this.webviewReady,
       trusted: vscode.workspace.isTrusted,
+      migratedFrom: this.store.getMeta("migratedFrom"),
     };
   }
   async indexWorkspace(
@@ -1923,9 +1925,46 @@ export async function activate(context: vscode.ExtensionContext): Promise<{
       await vscode.workspace.fs.rename(temp, file, { overwrite: true });
     },
   };
+  const legacyId = "okf-studio-local.okf-knowledge-studio";
+  const changesIdentity = context.extension.id.toLowerCase() !== legacyId;
+  if (changesIdentity && vscode.extensions.getExtension(legacyId)) {
+    void vscode.window.showWarningMessage(
+      "Disable the old OKF Studio extension from publisher okf-studio-local, then reload VS Code. The new installation can import its local catalog after it is disabled.",
+    );
+    throw new Error(
+      "Disable the legacy OKF Studio extension and reload before activating the Marketplace edition.",
+    );
+  }
+  const legacyDirectory = vscode.Uri.joinPath(
+    context.globalStorageUri,
+    "..",
+    legacyId,
+    "workspaces",
+    key,
+  );
+  const migrated =
+    changesIdentity && (await read(backup)) === undefined
+      ? await importLegacyCatalog(
+          io,
+          legacyId,
+          (saved) =>
+            read(
+              vscode.Uri.joinPath(
+                legacyDirectory,
+                saved ? "studio.sqlite.bak" : "studio.sqlite",
+              ),
+            ),
+          context.asAbsolutePath("out/sql-wasm.wasm"),
+        )
+      : undefined;
   let store: Store;
   try {
-    store = await Store.open(io, context.asAbsolutePath("out/sql-wasm.wasm"));
+    store =
+      migrated ??
+      (await Store.open(
+        { ...io, read: async () => (await read(file)) ?? (await read(backup)) },
+        context.asAbsolutePath("out/sql-wasm.wasm"),
+      ));
   } catch (error) {
     const bytes = await read(backup);
     if (!bytes) throw error;
@@ -1943,6 +1982,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<{
     );
   });
   await studio.initialize();
+  if (migrated)
+    void vscode.window.showInformationMessage(
+      "OKF Studio imported this workspace's previous local catalog. Original files and the old catalog were preserved. Re-enter provider credentials for the new publisher; session consent starts fresh.",
+    );
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider("okf.studio", studio, {
       webviewOptions: { retainContextWhenHidden: true },

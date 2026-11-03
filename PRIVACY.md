@@ -16,6 +16,10 @@ Webview scripts use a nonce CSP and cannot connect to the network. React renders
 
 MCP runs a bundled stdio child process. It can access only an authenticated loopback bridge for the current extension session. Its bridge token is ephemeral, not an external-provider credential. Read tools return redacted, bounded local evidence. Proposal creation prompts the user; approval of a diff is a second distinct permission boundary. The local operating-system user remains a trusted boundary.
 
+## Publisher transition in 0.4.1
+
+The public publisher is ParakramJain. On first activation in each workspace, a validated legacy catalog can be copied from the old `okf-studio-local` global storage location when no current catalog exists. Old catalog and source/OKF files are not deleted. Credentials remain in the old extension's SecretStorage and must be re-entered for the new publisher; egress grants start fresh. Removing the new catalog does not erase preserved legacy catalog files. After verifying the migration, manage retained old-profile data according to your retention needs.
+
 ## 0.4.0 visible controls
 
 Vector Studio stores non-secret settings in VS Code user configuration. Synthetic embedding probes contain no repository text; vector connection tests do not create/delete collections or tables. Agent Hub context exports contain bounded source-derived evidence and must be handled as private files. Diagnostics export redacts common patterns but can retain source paths/identifiers. MCP runtime checks exercise the local packaged process/bridge and do not establish an external client's identity. The Features/About pages expose verification limits; see docs/SECURITY.md. Owner: Parakram Jain.

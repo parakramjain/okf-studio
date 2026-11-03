@@ -186,7 +186,7 @@ export function generateConcept(
       },
     ],
     generated: {
-      by: "okf-knowledge-studio/0.4.0",
+      by: "okf-knowledge-studio/0.4.1",
       at: generatedAt,
     },
     "x-okf-studio": {

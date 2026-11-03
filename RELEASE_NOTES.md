@@ -1,11 +1,13 @@
-# Release notes — 0.4.0
+# OKF Studio 0.4.1 — public preview
 
 Turn code and documents into trusted knowledge that AI agents can use.
 
-Author, developer and owner: **Parakram Jain**. This release applies the development review to OKF Studio. The six destinations, wider editor view, feature catalog, About, direct document-to-AI action and multiple-repository scope make existing capabilities easier to find.
+Author, developer and owner: Parakram Jain.
 
-Vector Studio adds editable settings, synthetic/read-only connection tests, six explicit index states, chunk inspection and a retrieval playground. Agent Hub adds a real packaged MCP runtime check, all nine tool descriptions, a read-only playground and bounded context-pack preview/export. Quality & Governance adds visible requirement tracing, sensitive-data warnings and diagnostics export while retaining diff/bulk approval and undo protections.
+This patch prepares public distribution of the six-section OKF Studio extension. It fixes the renamed `docs/pending_issue.md` links and package inclusion, removes obsolete private-repository wording, rewrites packaged README links/images to public HTTPS URLs, and adds a manually triggered Marketplace Trusted Publishing workflow with publisher/version/branch/CI checks.
 
-The first OKF bundle still asks for its location and builds directly; later updates require review. The internal extension ID, settings, local database and MCP identity stay compatible. Saved navigation migrates from the old five destinations. Install `dist/okf-studio-0.4.0.vsix` or build from the lockfile. The source repository is private at https://github.com/parakramjain/okf-studio.
+Install the attached `okf-studio-0.4.1.vsix` with **Extensions > Install from VSIX**, or use the [Marketplace listing](https://marketplace.visualstudio.com/items?itemName=ParakramJain.okf-knowledge-studio) once its publication workflow completes. GitHub source and downloads are public. This release is a Preview. The owner has authorized publication and supplied publisher `ParakramJain` plus its Trusted Publishing policy. Publication verification is recorded in `docs/pending_issue.md`.
 
-Every current guide/reference has been updated; FEATURES, PUBLISHING, SECURITY, UX_GUIDELINES and pendinissue.md document statuses, release steps and remaining work. See IMPLEMENTATION_STATUS.md for executed checks and artifacts. Live cloud/Ollama/vector services, signed-in agents, manual screen readers and remote environments remain Not Verified. PR-based review, PDF/DOCX and enterprise collaboration/connectors remain Planned. Marketplace publication is pending a verified publisher and public metadata/support assets; this is a local VSIX release.
+The public identity is `ParakramJain.okf-knowledge-studio`. Disable the old `okf-studio-local` extension and reload before enabling this release. The new installation validates and copies the current workspace’s legacy catalog once, preserving original catalog and source/OKF files. Existing public catalogs are never replaced by this migration. Provider credentials must be re-entered; `okf.*` settings are retained. Keep the old installation/profile until you confirm the imported catalog.
+
+Retained features: document/code/hybrid repositories; first-create location picker; full file tree; bounded, cited AI scope; Vector Studio; Agent Hub with nine MCP tools and runtime checks; review/approval/undo, traceability, diagnostics; searchable features, tours and offline guide. Live model/vector accounts, signed-in agent clients, manual screen readers and remote-host behavior remain Not Verified. No production-integration certification is implied.

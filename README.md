@@ -8,7 +8,11 @@ OKF Studio is a local-first VS Code extension for importing repositories, genera
 
 Keyword search and evidence excerpts work offline without credentials. Generated answers and semantic embeddings require a configured model. External integrations are implemented and contract-tested; live provider, Copilot and non-Windows availability still require verification in your environment. See [current limits and planned additions](#current-limits-and-planned-additions).
 
-Author, developer and owner: **Parakram Jain**. Source: [parakramjain/okf-studio](https://github.com/parakramjain/okf-studio) (private; collaborator access required). Marketplace publisher verification is pending.
+Author, developer and owner: **Parakram Jain**. Source: [parakramjain/okf-studio](https://github.com/parakramjain/okf-studio) (public). Marketplace publisher: **ParakramJain**. The listing is published through the configured Trusted Publishing workflow.
+
+## Public preview release
+
+Download the installable VSIX from [GitHub Releases](https://github.com/parakramjain/okf-studio/releases/tag/v0.4.1). Marketplace publisher setup is complete. A GitHub release and a Marketplace listing are separate distribution channels; the workflow verifies the final submission. The release is marked Preview while live integrations and manual accessibility/remote-host checks remain unverified.
 
 ## New in 0.4.0
 
@@ -19,7 +23,7 @@ Six destinations make the workflow explicit: **Repositories**, **Knowledge Explo
 - Test the real MCP runtime, inspect all nine tools, run read-only tools and preview/export bounded agent context packs.
 - Trace requirements through observed code/test links, see sensitive-data warnings and export redacted diagnostics.
 
-See the complete [feature catalog with status and prerequisites](docs/FEATURES.md), [user guide](docs/USER_GUIDE.md), [publishing checklist](docs/PUBLISHING.md) and [pending external requirements](docs/pendinissue.md).
+See the complete [feature catalog with status and prerequisites](docs/FEATURES.md), [user guide](docs/USER_GUIDE.md), [publishing checklist](docs/PUBLISHING.md) and [pending external requirements](docs/pending_issue.md).
 
 ## Running extension
 
@@ -31,10 +35,10 @@ These screenshots show the real Windows VS Code extension using non-sensitive lo
 
 ## Install
 
-Build from source or install `dist/okf-studio-0.4.0.vsix`:
+Build from source or install `dist/okf-studio-0.4.1.vsix`:
 
 ```powershell
-code --install-extension dist/okf-studio-0.4.0.vsix
+code --install-extension dist/okf-studio-0.4.1.vsix
 ```
 
 Requires VS Code 1.109+ on a desktop Node extension host. Remote Node hosts are supported by the architecture but have not been verified locally. Browser-only and virtual workspaces are unsupported.
@@ -44,7 +48,7 @@ Requires VS Code 1.109+ on a desktop Node extension host. Remote Node hosts are 
 3. Search immediately, or click **Proceed to Create OKF** on a repository card and choose where to create its bundle.
 4. Optionally configure chat models, embeddings and vector storage with **OKF: Configure Providers and Credentials**.
 
-The display name is OKF Studio. The internal extension ID remains `okf-studio-local.okf-knowledge-studio` for compatibility with existing installations, settings and local data.
+The display name is OKF Studio. The public extension ID is `ParakramJain.okf-knowledge-studio`. If upgrading from `okf-studio-local`, disable the old extension and reload before enabling this version. For each workspace, the new extension validates and imports the old catalog only when its own catalog is absent, preserving the originals. Settings keep the `okf.*` keys; re-enter provider credentials in the new installation.
 
 ## Features
 
@@ -301,4 +305,4 @@ The format implementation follows [Google OKF v0.2](https://github.com/GoogleClo
 
 Import `tests/fixtures/workspace` in Both mode. Explore `guide.md` and choose Ask this document. Preview a question about authentication, then use offline evidence mode to check its citations. In Vector Studio test local storage and run keyword retrieval. In Agent Hub test the runtime, preview a context pack for token verification, and inspect the read-only tools. In Quality & Governance trace REQ-001 and inspect findings. Create an OKF bundle at a new location, then regenerate after a source edit to review the changed-file diff.
 
-For help see [troubleshooting](docs/TROUBLESHOOTING.md), [privacy](PRIVACY.md) and [security](docs/SECURITY.md). The private issue tracker requires collaborator access.
+For help see [troubleshooting](docs/TROUBLESHOOTING.md), [privacy](PRIVACY.md) and [security](docs/SECURITY.md). Report reproducible, non-sensitive issues in the public GitHub issue tracker.

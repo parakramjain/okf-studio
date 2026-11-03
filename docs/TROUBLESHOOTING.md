@@ -27,6 +27,6 @@ For a reproducible report include extension/editor versions, operating system, a
 - **MCP Registered but client Not Verified:** registration is not a client session. Run Test MCP runtime in Agent Hub, then enable the server in the intended coding client.
 - **Runtime test Failed:** inspect the reported startup/tool error and OKF output, check trust and the packaged `out/mcp.cjs` file. Reinstall the verified VSIX if files are missing.
 - **Guide or Features hard to read in a narrow sidebar:** choose Open in editor; every page also has Tour this page.
-- **Private repository links require sign-in:** only collaborators have access. Public support/docs hosting and Marketplace publisher verification remain pending in pendinissue.md.
+- **Marketplace listing is not available yet:** the repository, docs and screenshots are public. The remaining account setup is tracked in pending_issue.md; public VSIX downloads are on GitHub Releases.
 
 Use Quality & Governance > Export diagnostics for a redacted report. Inspect it before sharing; redaction cannot detect every sensitive detail. Release owner: Parakram Jain.
