@@ -12,7 +12,7 @@ Author, developer and owner: **Parakram Jain**. Source: [parakramjain/okf-studio
 
 ## Public preview release
 
-Download the installable VSIX from [GitHub Releases](https://github.com/parakramjain/okf-studio/releases/tag/v0.4.1). Marketplace publisher setup is complete. A GitHub release and a Marketplace listing are separate distribution channels; the workflow verifies the final submission. The release is marked Preview while live integrations and manual accessibility/remote-host checks remain unverified.
+Install **OKF Studio 0.4.1** from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ParakramJain.okf-knowledge-studio), or download the same verified VSIX from [GitHub Releases](https://github.com/parakramjain/okf-studio/releases/tag/v0.4.1). Both are published. The release is marked Preview while live integrations and manual accessibility/remote-host checks remain unverified.
 
 ## New in 0.4.0
 
@@ -35,7 +35,13 @@ These screenshots show the real Windows VS Code extension using non-sensitive lo
 
 ## Install
 
-Build from source or install `dist/okf-studio-0.4.1.vsix`:
+Install the published extension:
+
+```powershell
+code --install-extension ParakramJain.okf-knowledge-studio
+```
+
+Or download the GitHub release VSIX (or build it from source) and install its local path:
 
 ```powershell
 code --install-extension dist/okf-studio-0.4.1.vsix

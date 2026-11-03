@@ -37,7 +37,7 @@ Release owner: Parakram Jain. Status describes implementation, not external-serv
 | Live chat/embedding/vector services | Not Verified | Provider request/response contracts tested; user deployments/account availability not supplied |
 | Signed-in Copilot/custom client | Not Verified | Actual MCP runtime passes; client authentication/configuration is a separate check |
 | Manual screen reader and remote hosts | Not Verified | Semantic keyboard/axe checks do not replace manual assistive-technology testing |
-| Marketplace publisher | Configured | Owner supplied `ParakramJain` and confirmed Trusted Publishing policy; manifest and workflow variable aligned |
+| Marketplace publisher | Published and verified | `ParakramJain` published 0.4.1 through OIDC in run [41569561059](https://github.com/parakramjain/okf-studio/actions/runs/41569561059); public Marketplace listing and matching GitHub VSIX verified |
 | Public documentation/images/support | Implemented / verified | Anonymous HTTPS checks return 200 for repository, issue tracker, README, icon and screenshots |
 | VSIX clean install and upgrade | Implemented / verified on Windows | Both installed host runs pass; upgrade retains existing repositories/records before sync; runtime/manifest byte verification and zero-vulnerability audit pass |
 | Public source repository | Implemented | Owner made `parakramjain/okf-studio` public; visibility and anonymous access verified. Marketplace listing remains separate. |

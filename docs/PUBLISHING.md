@@ -1,27 +1,28 @@
 # Publishing OKF Studio
 
-Version 0.4.1 public preview. Owner: Parakram Jain. Repository: https://github.com/parakramjain/okf-studio (public). Publication was explicitly authorized on 2026-11-02. Publisher `ParakramJain` and the matching Trusted Publishing policy were supplied by the owner. The non-secret repository variable is configured. The workflow’s authenticated exchange verifies authorization during submission.
+Version 0.4.1 public preview is published on the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=ParakramJain.okf-knowledge-studio) and [GitHub Releases](https://github.com/parakramjain/okf-studio/releases/tag/v0.4.1). Owner: Parakram Jain. Repository: https://github.com/parakramjain/okf-studio (public). The [Trusted Publishing workflow](https://github.com/parakramjain/okf-studio/actions/runs/41569561059) succeeded and the public listing was verified on 2026-11-02 (America/Toronto). Both channels use the same verified VSIX. No further account setup is required for this release; [installation and remaining manual checks](pending_issue.md#steps-for-parakram-now) are documented separately.
 
 ## One-time setup completed by Parakram
 
-1. Open [Marketplace management](https://marketplace.visualstudio.com/manage), sign in with a Microsoft account, and select **Create publisher**. Choose a permanent ID (`parakramjain` is a suggestion if available) and display name (`Parakram Jain`). Complete the account's required fields and select **Create**. Send the exact ID to the agent; never send passwords or tokens.
-2. In that publisher, open **Trusted Publishing > Create**. Use policy name `OKF Studio releases`, repository owner `parakramjain`, repository `okf-studio`, workflow `publish-marketplace.yml`, and leave **Environment** blank. Create the policy and tell the agent it is ready.
+1. Created publisher **ParakramJain**, display name **Parakram Jain**, in [Marketplace management](https://marketplace.visualstudio.com/manage).
+2. Created Trusted Publishing policy **OKF Studio releases** with repository owner `parakramjain`, repository `okf-studio`, workflow `publish-marketplace.yml`, and **Environment** blank. A successful OIDC publication verified this configuration.
 
 Private vulnerability reporting has also been enabled and verified for the public repository; no extra security-setting step is needed from the owner.
 
 Microsoft documents publisher creation and [GitHub Trusted Publishing](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#publish-with-github-actions-and-trusted-publishing). The installed VSCE CLI supports `--oidc`; this route does not require a PAT or a GitHub repository secret. Authentication details should remain in the account's own sign-in UI.
 
-## Release operator checklist
+## Future release operator checklist
 
 - The manifest is aligned to `ParakramJain`; the previous local ID is `okf-studio-local.okf-knowledge-studio`. Disable the old extension before enabling the replacement because their commands/views have the same IDs. The new installation imports a validated catalog once for each workspace and keeps original files. Re-enter credentials because SecretStorage is bound to extension identity.
 - The non-secret Actions repository variable `VSCE_PUBLISHER=ParakramJain` is configured. Future publisher changes require deliberate identity handling; this variable alone does not rewrite a VSIX.
-- Commit, package, verify and publish the updated source/release; wait for **Validate and package** to pass for that exact commit.
+- Increment the manifest/lockfile and runtime version references for a new release; published version 0.4.1 cannot be overwritten. Update release notes, commit and push, then wait for **Validate and package** to pass for that exact commit.
 - Trigger **Publish to Visual Studio Marketplace** on `main`, supplying the exact `package.json` version. The workflow rejects a missing/mismatched publisher, a different branch/repository, an incorrect version, and missing/pending/failed CI. It builds and inspects a VSIX, retains the artifact/checksum, and submits that archive using OIDC. It runs only on manual dispatch; pushes do not publish to Marketplace.
 - Check the Marketplace listing after its processing completes. Until that check succeeds, report the release as GitHub-only, not Marketplace-published.
+- Download the workflow's `marketplace-<version>` artifact and verify/install that exact archive. Publish the matching GitHub release with the same VSIX, SHA-256 checksum, inspection, installed-runtime verification, SBOM and audit reports. Keep the release tag on the verified source commit; subsequent documentation-only status updates may follow on `main`.
 
 ## If running the workflow yourself
 
-After the agent confirms identity alignment and account setup, open [Actions](https://github.com/parakramjain/okf-studio/actions/workflows/publish-marketplace.yml), select **Run workflow**, choose `main`, and enter the current manifest version. A rejected preflight gives the missing prerequisite. An OIDC authorization failure usually means the publisher policy's owner/repository/workflow/environment does not match; fix the policy and rerun. Do not bypass the gate or supply an unverified publisher ID.
+For a new, unpublished version whose exact commit has passed CI, open [Actions](https://github.com/parakramjain/okf-studio/actions/workflows/publish-marketplace.yml), select **Run workflow**, choose `main`, and enter the current manifest version. A rejected preflight gives the missing prerequisite. An OIDC authorization failure usually means the publisher policy's owner/repository/workflow/environment does not match; fix the policy and rerun. Do not bypass the gate or supply an unverified publisher ID. Do not rerun publication of 0.4.1.
 
 ## Local verification and public release
 
